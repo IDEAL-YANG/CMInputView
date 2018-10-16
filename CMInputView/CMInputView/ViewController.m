@@ -8,9 +8,9 @@
 
 #import "ViewController.h"
 
-#import "CM_InputView/CMInputView.h"
+#import "CMInputView.h"
+
 @interface ViewController ()
-@property (nonatomic,strong) CMInputView *inputView;
 
 @end
 
@@ -18,24 +18,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    CMInputView *inputView;
+    
     // Do any additional setup after loading the view, typically from a nib.
-    _inputView = [[CMInputView alloc]initWithFrame:CGRectMake(100, 100, 300, 40)];
+    inputView = [[CMInputView alloc]initWithFrame:CGRectMake(100, 100, 300, 40)];
 
-    _inputView.font = [UIFont systemFontOfSize:18];
-    _inputView.placeholder = @"CrabMan的测试文字";
+    inputView.font = [UIFont systemFontOfSize:18];
+    inputView.placeholder = @"CrabMan的测试文字";
 
-    _inputView.cornerRadius = 4;
-    _inputView.placeholderColor = [UIColor redColor];
-    //_inputView.placeholderFont = [UIFont systemFontOfSize:22];
+    inputView.cornerRadius = 4;
+    inputView.placeholderColor = [UIColor redColor];
+    //inputView.placeholderFont = [UIFont systemFontOfSize:22];
     // 设置文本框最大行数
-    [_inputView textValueDidChanged:^(NSString *text, CGFloat textHeight) {
-        CGRect frame = _inputView.frame;
+    __weak typeof(CMInputView) *weakInputView = inputView;
+    [inputView textValueDidChanged:^(NSString *text, CGFloat textHeight) {
+        CGRect frame = weakInputView.frame;
         frame.size.height = textHeight;
-        _inputView.frame = frame;
+        weakInputView.frame = frame;
     }];
     
-    _inputView.maxNumberOfLines = 4;
-    [self.view addSubview:_inputView];
+    inputView.maxNumberOfLines = 4;
+    [self.view addSubview:inputView];
     
     
    
@@ -49,10 +53,11 @@
 //    self.inputView.textColor = [UIColor blackColor];
    
     
-    self.inputView.text = @"啦啦啦啦";
-    
-    self.inputView.text = nil;
-    
+//    self.inputView.text = @"啦啦啦啦";
+//
+//    self.inputView.text = nil;
+
+    [self.view endEditing:true];
 }
 
 

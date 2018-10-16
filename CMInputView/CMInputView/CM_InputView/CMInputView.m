@@ -168,6 +168,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(text))];
+    NSLog(@"%@ release!!!",self);
 }
 
 @end
